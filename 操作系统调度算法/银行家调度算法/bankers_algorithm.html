@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>银行家算法可视化</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>银行家算法可视化系统</h1>
+            <p class="subtitle">操作系统死锁避免算法</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="single">单资源类型</button>
+            <button class="tab-btn" data-tab="multi">多资源类型</button>
+            <button class="tab-btn" data-tab="about">算法说明</button>
+        </div>
+
+        <div class="tab-content">
+            <!-- 单资源类型标签页 -->
+            <div class="tab-pane active" id="single">
+                <div class="input-section">
+                    <h2>单资源类型银行家算法</h2>
+                    <div class="input-group">
+                        <label for="total-resources">总资源数量:</label>
+                        <input type="number" id="total-resources" min="1" value="12">
+                    </div>
+                    <div class="input-group">
+                        <label for="process-count-single">进程数量:</label>
+                        <input type="number" id="process-count-single" min="1" max="10" value="3">
+                        <button id="generate-single-table" class="btn">生成表格</button>
+                    </div>
+
+                    <div id="single-table-container" class="table-container">
+                        <table id="single-resource-table">
+                            <thead>
+                                <tr>
+                                    <th>进程</th>
+                                    <th>已分配资源</th>
+                                    <th>最大需求</th>
+                                    <th>还需资源</th>
+                                </tr>
+                            </thead>
+                            <tbody id="single-table-body">
+                                <!-- 表格内容将通过JavaScript动态生成 -->
+                            </tbody>
+                        </table>
+                        <div class="input-group">
+                            <label for="available-resources">可用资源:</label>
+                            <input type="number" id="available-resources" min="0" value="2">
+                        </div>
+                    </div>
+                    <button id="check-single" class="btn primary">检查安全性</button>
+                </div>
+                <div class="result-section" id="single-result">
+                    <h3>结果</h3>
+                    <div class="result-content">
+                        <p>请输入数据并点击"检查安全性"按钮</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 多资源类型标签页 -->
+            <div class="tab-pane" id="multi">
+                <div class="input-section">
+                    <h2>多资源类型银行家算法</h2>
+                    <div class="input-controls">
+                        <div class="input-group">
+                            <label for="process-count">进程数量:</label>
+                            <input type="number" id="process-count" min="1" max="10" value="5">
+                        </div>
+                        <div class="input-group">
+                            <label for="resource-count">资源类型数:</label>
+                            <input type="number" id="resource-count" min="1" max="10" value="4">
+                        </div>
+                        <button id="generate-tables" class="btn">生成表格</button>
+                    </div>
+
+                    <div id="matrix-container" class="matrix-container">
+                        <div class="matrix-section">
+                            <h3>分配矩阵 (Allocation)</h3>
+                            <div class="matrix" id="allocation-matrix"></div>
+                        </div>
+                        <div class="matrix-section">
+                            <h3>最大需求矩阵 (Max)</h3>
+                            <div class="matrix" id="max-matrix"></div>
+                        </div>
+                        <div class="matrix-section">
+                            <h3>可用资源 (Available)</h3>
+                            <div class="available-resources" id="available-resources-container"></div>
+                        </div>
+                    </div>
+                    <button id="check-safety" class="btn primary">检查安全性</button>
+                    <div class="request-section">
+                        <h3>资源请求</h3>
+                        <div class="input-group">
+                            <label for="request-process">进程ID:</label>
+                            <input type="number" id="request-process" min="0" value="0">
+                        </div>
+                        <div id="request-resources-container" class="request-resources"></div>
+                        <button id="check-request" class="btn">检查请求</button>
+                    </div>
+                </div>
+                <div class="result-section" id="multi-result">
+                    <h3>结果</h3>
+                    <div class="result-content">
+                        <p>请输入数据并点击"检查安全性"按钮</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 算法说明标签页 -->
+            <div class="tab-pane" id="about">
+                <div class="about-content">
+                    <h2>银行家算法说明</h2>
+                    <p>银行家算法是一种死锁避免算法，由艾兹格·迪杰斯特拉提出。该算法以银行借贷系统的分配策略为基础，确保系统在分配资源时不会进入不安全状态。</p>
+                    
+                    <h3>算法原理</h3>
+                    <p>银行家算法通过预先分配资源，确保系统始终处于安全状态。安全状态是指存在一个进程执行序列，使得每个进程都能获得所需的资源，完成任务，释放资源，然后使其他进程也能完成。</p>
+                    
+                    <h3>算法步骤</h3>
+                    <ol>
+                        <li>检查请求是否超过声明的最大需求</li>
+                        <li>检查请求是否超过可用资源</li>
+                        <li>尝试分配资源，并检查系统是否仍处于安全状态</li>
+                        <li>如果安全，则分配资源；否则，拒绝请求</li>
+                    </ol>
+                    
+                    <h3>数据结构</h3>
+                    <ul>
+                        <li><strong>Available</strong>: 可用资源向量</li>
+                        <li><strong>Max</strong>: 最大需求矩阵</li>
+                        <li><strong>Allocation</strong>: 已分配资源矩阵</li>
+                        <li><strong>Need</strong>: 还需资源矩阵 (Max - Allocation)</li>
+                    </ul>
+                    
+                    <h3>安全性算法</h3>
+                    <p>安全性算法用于确定系统是否处于安全状态：</p>
+                    <ol>
+                        <li>初始化 Work = Available，Finish[i] = false</li>
+                        <li>查找满足条件的进程 i：Finish[i] = false 且 Need[i] ≤ Work</li>
+                        <li>如果找到，则 Work = Work + Allocation[i]，Finish[i] = true，返回步骤2</li>
+                        <li>如果所有进程的 Finish[i] 都为 true，则系统处于安全状态</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>银行家算法可视化系统 &copy; 2024</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
